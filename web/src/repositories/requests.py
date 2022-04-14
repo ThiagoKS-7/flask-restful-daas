@@ -1,62 +1,44 @@
+import bcrypt
 from flask import request
 
 
-def checkPostedData(body, functionName):
+def checkPostedData(collection,body, functionName):
   # checa se um dos dois parametros ñ tá no body
-  if 'x' not in body or 'y' not in body:
+  if 'username' not in body or 'password' not in body:
     error = {
-      "message": "Error: missing required parameter.",
+      "message": "Error: missing required parameter usr/pwd.",
       "status": 301
     }
     return error
   # Ifs encadeados pra checar qual função é
-  if functionName == 'add':
-      x = int(body['x'])
-      y = int(body['y'])
-      add = x + y
-      res = {
-        "message": add,
-        "status": 200
-      }
-      return res
-  elif functionName == 'minus':
-      x = int(body['x'])
-      y = int(body['y'])
-      subtract = x - y
-      res = {
-        "message": subtract,
-        "status": 200
-      }
-      return res
-  elif functionName == 'multi':
-      x = int(body['x'])
-      y = int(body['y'])
-      multiplication = x * y
-      res = {
-        "message": multiplication,
-        "status": 200
-      }
-      return res
-  elif functionName == 'div':
-    if body['y'] == 0:
-      error = {
-      "message": "Error: division by zero.",
-      "status": 302
+  if functionName == 'register':
+    usr = body["username"]
+    pwd = body["password"].encode('utf-8')
+    hash_pwd = bcrypt.hashpw(pwd, bcrypt.gensalt())
+    have_same_data = collection.find_one({'Username': usr})
+    if not have_same_data:
+      collection.insert_one({
+        "Username":usr,
+        "Password":hash_pwd,
+        "Tokens": 10
+      })
+      retJson = {
+      "message":"You successfully signed up!",
+      "status": 200
       }
     else:
-      x = int(body['x'])
-      y = int(body['y'])
-      division = x / y
-      res = {
-        "message": division,
-        "status": 200
+      retJson = {
+       "message":"Error! User already exists.",
+       "status": 400
       }
-      return res
+
+    return retJson
+
 # tenta checar se a request tá certa
 # se não der, retorna bad request
-def handleRequest(body, routeName):
+def handleRequest(collection,body, routeName):
     try:  
-      res = checkPostedData(body, routeName)
+      res = checkPostedData(collection,body, routeName)
       return res
     except request .HTTP_error as exception:
       error = {

@@ -1,30 +1,28 @@
+'''
+Registrar user 0 tokens
+Cada user recebe 10 tokens
+post de sentença - 1 token
+get do db - 1 token
+'''
 from flask import Flask,render_template
-from flask_restful import Api
-from models.resources.calculations import Add, Subtract, Multi, Divide
-from models.resources.visit import Visit
+from flask_restful import Api 
+from models.resources.register import Register
 
-# instanciando app flask
 app = Flask(__name__)
-# instanciando api flask-restful
 api =  Api(app)
-
-# declaracao de vars
+ 
 title = "Flask tutorial"
 subtitle = "Running on port 5000"
-teste = "Teste"
+
+
+
 
 '''
-***********************
-*       API ROUTES    *
-***********************
+ ***********************
+ *       API ROUTES    *
+ ***********************
 '''
-# add_resource - inclui rota
-api.add_resource(Add, "/add")
-api.add_resource(Subtract, "/minus")
-api.add_resource(Multi, "/multi")
-api.add_resource(Divide, "/div")
-api.add_resource(Visit, "/hello")
-#----------------------------------'''
+api.add_resource(Register, '/register')
 
 '''
 ***********************
@@ -35,10 +33,41 @@ api.add_resource(Visit, "/hello")
 def hello_world():
   return render_template('index.html', title=title, subtitle=subtitle)
 
-@app.route('/teste')
-def test():
-  return render_template('test.html', title=title, teste=teste)
-#--------------------------------------------------------------------'''
 
-if __name__ == '__main__':
-  app.run(host='0.0.0.0')
+
+# from flask import Flask,render_template
+# from flask_restful import Api
+# from models.resources.calculations import Add, Subtract, Multi, Divide
+# app = Flask(__name__)
+# api =  Api(app)
+# 
+# title = "Flask tutorial"
+# subtitle = "Running on port 5000"
+# 
+# '''
+# ***********************
+# *       API ROUTES    *
+# ***********************
+# '''
+# api.add_resource(Add, "/add")
+# api.add_resource(Subtract, "/minus")
+# api.add_resource(Multi, "/multi")
+# api.add_resource(Divide, "/div")
+# #----------------------------------'''
+# 
+# '''
+# ***********************
+# *       APP ROUTES    *
+# ***********************
+# '''
+# @app.route('/')
+# def hello_world():
+#   return render_template('index.html', title=title, subtitle=subtitle)
+# 
+# @app.route('/teste')
+# def test():
+#   return "teste"
+# #--------------------------------------------------------------------'''
+# 
+# if __name__ == '__main__':
+#   app.run(debug=True)
