@@ -6,7 +6,7 @@ get do db - 1 token
 '''
 from flask import Flask,render_template
 from flask_restful import Api 
-from models.resources.register import Register
+from web.src.models.resources.manage_sentence import Register, Store
 
 app = Flask(__name__)
 api =  Api(app)
@@ -15,14 +15,13 @@ title = "Flask tutorial"
 subtitle = "Running on port 5000"
 
 
-
-
 '''
  ***********************
  *       API ROUTES    *
  ***********************
 '''
 api.add_resource(Register, '/register')
+api.add_resource(Store, '/store')
 
 '''
 ***********************
@@ -34,40 +33,6 @@ def hello_world():
   return render_template('index.html', title=title, subtitle=subtitle)
 
 
+if __name__ == '__main__':
+  app.run(debug=True)
 
-# from flask import Flask,render_template
-# from flask_restful import Api
-# from models.resources.calculations import Add, Subtract, Multi, Divide
-# app = Flask(__name__)
-# api =  Api(app)
-# 
-# title = "Flask tutorial"
-# subtitle = "Running on port 5000"
-# 
-# '''
-# ***********************
-# *       API ROUTES    *
-# ***********************
-# '''
-# api.add_resource(Add, "/add")
-# api.add_resource(Subtract, "/minus")
-# api.add_resource(Multi, "/multi")
-# api.add_resource(Divide, "/div")
-# #----------------------------------'''
-# 
-# '''
-# ***********************
-# *       APP ROUTES    *
-# ***********************
-# '''
-# @app.route('/')
-# def hello_world():
-#   return render_template('index.html', title=title, subtitle=subtitle)
-# 
-# @app.route('/teste')
-# def test():
-#   return "teste"
-# #--------------------------------------------------------------------'''
-# 
-# if __name__ == '__main__':
-#   app.run(debug=True)

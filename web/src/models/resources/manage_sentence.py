@@ -17,3 +17,10 @@ class Register(Resource):
     if body:
       res = handleRequest(Users,body, 'register')
     return res
+
+class Store(Resource):
+  def post(self):
+    body = request.get_json()
+    if body:
+      res = handleRequest(Users,body, 'store')
+    return res
