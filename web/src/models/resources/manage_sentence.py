@@ -1,7 +1,9 @@
+from pprint import pprint
 from pymongo import MongoClient
 from flask_restful import Resource
 from flask import request
 from repositories.requests import handleRequest
+import bcrypt
 
 # instanciando mongoClient na porta default
 client = MongoClient("localhost", 27017)
@@ -23,4 +25,11 @@ class Store(Resource):
     body = request.get_json()
     if body:
       res = handleRequest(Users,body, 'store')
+    return res
+
+class GetUsers(Resource):
+  def get(self):
+    body = request.get_json()
+    if body:
+      res = handleRequest(Users,body, 'get-users')
     return res

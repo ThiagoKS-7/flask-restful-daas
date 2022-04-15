@@ -6,7 +6,7 @@ get do db - 1 token
 '''
 from flask import Flask,render_template
 from flask_restful import Api 
-from web.src.models.resources.manage_sentence import Register, Store
+from models.resources.manage_sentence import Register, Store, GetUsers
 
 app = Flask(__name__)
 api =  Api(app)
@@ -22,6 +22,7 @@ subtitle = "Running on port 5000"
 '''
 api.add_resource(Register, '/register')
 api.add_resource(Store, '/store')
+api.add_resource(GetUsers, '/get-users')
 
 '''
 ***********************
