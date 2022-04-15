@@ -21,7 +21,7 @@ class Register(Resource):
     return res
 
 class Store(Resource):
-  def post(self):
+  def patch(self):
     body = request.get_json()
     if body:
       res = handleRequest(Users,body, 'store')
